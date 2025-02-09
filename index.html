@@ -1,216 +1,1036 @@
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L7RLTN29Y1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-L7RLTN29Y1');
+    </script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Portfolio</title>
-    <link rel="stylesheet" href="tailwind.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="./images/favico.png" type="image/png">
+    <title>Femi Ajao</title>
+    <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
+    <link href="./tailwind.min.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js">
+    </script>
+    <style>
+        @layer base {
+            html {
+                scroll-behavoir: smooth;
+            }
+        }
 
+        .from-primary {
+            --tw-gradient-from: #1d99ac;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(34, 211, 238, 0));
+        }
+
+        .to-secondary {
+            --tw-gradient-to: #309e76;
+        }
+
+        .servicesImageHeight {
+            height: 220px;
+        }
+
+        /* custom non-Tailwind CSS */
+
+        @media (max-width: 576px) {
+            .content {
+                padding-top: 51px;
+            }
+        }
+
+        @media (min-width: 577px) {
+            .pt-scroll {
+                padding-top: 51px;
+            }
+
+            .nav-sticky {
+                position: fixed !important;
+                min-width: 100%;
+                top: 0;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+                transition: all .25s ease-in;
+                z-index: 1;
+            }
+        }
+
+        /* HAMBURGER MENU */
+
+        .hamburger {
+            cursor: pointer;
+            width: 48px;
+            height: 48px;
+            transition: all 0.25s;
+        }
+
+        .hamburger__top-bun,
+        .hamburger__bottom-bun {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background: #000;
+            transform: rotate(0);
+            transition: all 0.5s;
+        }
+
+        .hamburger:hover [class*="-bun"] {
+            background: #333;
+        }
+
+        .hamburger__top-bun {
+            transform: translateY(-5px);
+        }
+
+        .hamburger__bottom-bun {
+            transform: translateY(3px);
+        }
+
+        .open {
+            transform: rotate(90deg);
+            transform: translateY(-1px);
+        }
+
+        .open .hamburger__top-bun {
+            transform:
+                rotate(45deg) translateY(0px);
+        }
+
+        .open .hamburger__bottom-bun {
+            transform:
+                rotate(-45deg) translateY(0px);
+        }
+    </style>
 </head>
-<body class="bg-body text-white font-poppins pb-12">
-    
-    <header class="py-6">
-        <div class="container flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full">
-            <div class="text-lg font-bold">Jonathan.doe</div>
-            <div class="hidden md:flex space-x-12 items-center">
-                <a href="#" class="text-selected-text">Home</a>
-                <a href="#work">My work</a>
-                <a href="#clients">Clients</a>
-                <a href="#hire"><button class="px-6 py-2 bg-theme font-bold">Hire me</button></a>
-            </div>
-            <div class="md:hidden">
-                <svg width="26" height="18" viewBox="0 0 26 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 17.5H0.25V14.6667H13V17.5ZM25.75 10.4167H0.25V7.58333H25.75V10.4167ZM25.75 3.33333H13V0.5H25.75V3.33333Z" fill="white"/></svg>
-            </div>
-        </div>
+
+<body class="
+        antialised
+        relative
+        text-gray-600
+    " x-data="{navbarOpen: false, scrolledFromTop: false}"
+    x-init="window.pageYOffset > 60 ? scrolledFromTop = true : scrolledFromTop = false"
+    @scroll.window="window.pageYOffset > 60 ? scrolledFromTop = true : scrolledFromTop = false">
+
+    <!-- -->
+    <header class="
+            fixed
+            flex
+            w-full
+            bg-blue-500
+            justify-between
+            items-center
+            px-4
+            md:px-12
+            h-20
+            z-40
+            transition-all
+            duration-200
+            border-t-4 border-red-900
+            bg-gray-50 dark:bg-gray-700 backdrop-filter backdrop-blur
+          " :class="{'h-20': !scrolledFromTop, 'h-14': scrolledFromTop}">
+        <a href="#">
+            <img src="./images/logo.jpg" alt="Femi-Ajao Logo"
+                class="h-12 transition-all duration-200 w-12 rounded-full flex-shrink-0 border-6 _border-white shadow-md"
+                :class="{'h-12': !scrolledFromTop, 'h-10': scrolledFromTop}">
+        </a>
+        <nav>
+            <button class="md:hidden" @click="navbarOpen = !navbarOpen">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            <ul class="
+                fixed
+                left-0
+                right-0
+                min-h-0
+                bg-blue-500
+                space-y-4
+                p-4
+                transform
+                translate-x-full
+                transition
+                duration-200
+                md:relative
+                md:flex
+                md:min-h-0
+                md:space-y-0
+                md:space-x-6
+                md:p-0
+                md:translate-x-0
+              " :class="{'translate-x-full': !navbarOpen, 'translate-x-0': navbarOpen}"
+                @click="navbarOpen = !navbarOpen">
+                <li><a href="#" class="text-white">About</a></li>
+                <li><a href="#services" class="text-white">Services</a></li>
+                <li><a href="#projects" class="text-white">Projects</a></li>
+                <li><a href="#contact" class="text-white">Contact</a></li>
+                <li>
+                    <a href="./resume.pdf" target="_blank" type="button"
+                        class="border border-white-200 inline-block px-7 py-3 text-white font-medium text-sm leading-snug rounded shadow-md hover:bg-blue-400 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out">
+                        Resume
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </header>
-
-
-    <div class="container mt-16 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full">
-        <div class="flex flex-wrap md:flex-nowrap">
-
-            <nav class="inline-block lg:mr-24 lg:w-4 fixed left-percentage hidden xl:block">
-                <div class="absolute left-50 transform -translate-x-1/2 space-y-6 mt-36">
-                    <a href="#" class="nav-dot selected-circle block w-7 h-7 rounded-full border-4 border-nav bg-body">
-                        <span class="bg-black px-2 py-1 rounded-md ml-10 opacity-0">Home</span>
-                    </a>
-                    <a href="#work" class="nav-dot block w-7 h-7 rounded-full border-4 border-nav bg-body">
-                        <span class="bg-black px-2 py-1 rounded-md ml-10 opacity-0">Work</span>
-                    </a>
-                    <a href="#clients" class="nav-dot block w-7 h-7 rounded-full border-4 border-nav bg-body">
-                        <span class="bg-black px-2 py-1 rounded-md ml-10 opacity-0">Clients</span>
-                    </a>
-                    <a href="#hire" class="nav-dot block w-7 h-7 rounded-full border-4 border-nav bg-body">
-                        <span class="bg-black px-2 py-1 rounded-md ml-10 opacity-0">Hire</span>
-                    </a>
+    <main class="content">
+        <div class="absolute w-full min-h-screen">
+            <div class="absolute z-0 top-0 w-full h-1/2 bg-cover bg-bottom"
+                style="background-image: url(https://cdn.arabhardware.net/wp-content/uploads/2020/11/GfinEMFXnT42BFxAcDc2rA.jpg)">
+            </div>
+        </div>
+        <div class="relative z-10 flex min-h-screen h-auto justify-center items-center">
+            <div class="relative max-w-4xl md:pt-20">
+                <div
+                    class="absolute z-10 inset-0 bg-gradient-to-r from-primary t-secondary shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg">
                 </div>
-            </nav>
-
-            <div class="flex flex-wrap lg:ml-20 justify-center md:justify-start max-w-xl mt-0 md:my-36">
-                <h1 class="font-bold text-5xl md:text-6xl lg:text-7xl text-center md:text-left">Building<br> beautiful web experiences.</h1>
-                <div class="w-full flex justify-center md:justify-start">
-                    <button class="px-8 py-4 bg-theme text-white font-bold mt-12 flex items-center space-x-3">
-                        <div>
-                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.4375 11C14.4375 11.9117 14.0753 12.786 13.4307 13.4307C12.786 14.0753 11.9117 14.4375 11 14.4375C10.0883 14.4375 9.21398 14.0753 8.56932 13.4307C7.92466 12.786 7.5625 11.9117 7.5625 11C7.5625 10.0883 7.92466 9.21398 8.56932 8.56932C9.21398 7.92466 10.0883 7.5625 11 7.5625C11.9117 7.5625 12.786 7.92466 13.4307 8.56932C14.0753 9.21398 14.4375 10.0883 14.4375 11Z" fill="white"/>
-                                <path d="M0 11C0 11 4.125 3.4375 11 3.4375C17.875 3.4375 22 11 22 11C22 11 17.875 18.5625 11 18.5625C4.125 18.5625 0 11 0 11ZM11 15.8125C12.2764 15.8125 13.5004 15.3055 14.403 14.403C15.3055 13.5004 15.8125 12.2764 15.8125 11C15.8125 9.72365 15.3055 8.49957 14.403 7.59705C13.5004 6.69453 12.2764 6.1875 11 6.1875C9.72365 6.1875 8.49957 6.69453 7.59705 7.59705C6.69453 8.49957 6.1875 9.72365 6.1875 11C6.1875 12.2764 6.69453 13.5004 7.59705 14.403C8.49957 15.3055 9.72365 15.8125 11 15.8125Z" fill="white"/>
-                            </svg>								
+                <div class="relative z-20 bg-white md:flex justify-between p-12 shadow-lg rounded-lg w-full max-w-4xl">
+                    <div class="sm:flex flex-col justify-between space-y-6_ md:py-10 md:pr-10 pb-7">
+                        <div class="pb-3">
+                            <h2 class="text-lg">Hello, I am</h2>
+                            <h1 class="pt-1 text-5xl font-bold text-gray-800">Femi Ajao</h1>
                         </div>
-                        <span>View my work.</span>
-                    </button>
+                        <p class="text-xl leading-relaxed pb-2">
+                            I am a full stack web developer and co-founder of <a href="https://www.metierdigitals.com"
+                                target="_blank">Metier Digital Solutions.</a> I have passion for software development
+                            and writing codes that drive a solution. Here are a few technologies I have recently been
+                            working with: </p>
+                        <div class="flex items-center_ _md:justify-center pb-2">
+                            <small class="pr-3 md:pr-20">
+                                <ul>
+                                    <li>{Vue}</li>
+                                    <li>{React}</li>
+                                    <li>{NextJs}</li>
+                                </ul>
+                            </small>
+                            <small class="pr-3 md:pr-20">
+                                <ul>
+                                    <li>{Laravel}</li>
+                                    <li>{Codeigniter}</li>
+                                    <li>{WordPress}</li>
+                                </ul>
+                            </small>
+                            <small class="">
+                                <ul>
+                                    <li>{TypeScript}</li>
+                                    <li>{JavaScript (ES6+)}</li>
+                                    <li>{WooCommerce}</li>
+                                </ul>
+                            </small>
+                        </div>
+                        <p class="text-xl leading-relaxed">Feel free to take a walk through my freelance services and
+                            some of my most recent designs on my project section.</p>
+                    </div>
+                    <img src="images/passport.jpeg"
+                        class="md:w-80 md:h-80 w-50 h-50 rounded-full flex-shrink-0 border-6 border-white shadow-md"
+                        alt="femi ajao portfolio passport">
                 </div>
             </div>
-            <img src="img/man.png" alt="Man" class="w-3/4 mt-12 md:absolute -mt-6 md:mt-0 right-0 -z-1">
         </div>
-    </div>
+        <section id="services" class="bg-gray-50 pt-20 pb-20 px-8">
+            <div class="max-w-6xl max-auto">
+                <div class="text-center">
+                    <h1 class="text-6xl text-gray-800">Freelance Services</h1>
+                    <p class="pt-2 text-xl">Here are the services i offer</p>
+                </div>
+                <div class="mt-24 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-20">
+                    <div class="relative">
+                        <div
+                            class="absolute z-10 inset-0 bg-gradient-to-r from-primary to-secondary shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg">
+                        </div>
+                        <div class="relative z-20 bg-white h-full rounded-md shadow-md">
+                            <img src="./images/services/responsive-web-design.jpg"
+                                class="rounded-t-md servicesImageHeight" alt="">
+                            <div class="px-10 pb-6">
+                                <h2 class="pt-3 font-bold text-2xl text-gray-800">Responsive Websites</h2>
+                                <p class="pt-3">
+                                    I make custom-made websites user friendly and device compatible, tailored to my
+                                    clients and industry needs. With over 10 years of experience, i have demonstrated
+                                    competence in building websites that are user friendly, search engine optimized and
+                                    many more. I leverage the best technology to deliver the results needed for any
+                                    business.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div
+                            class="absolute z-10 inset-0 bg-gradient-to-r from-primary to-secondary shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg">
+                        </div>
+                        <div class="relative z-20 bg-white h-full rounded-md shadow-md">
+                            <img src="./images/services/codeing.jpg"
+                                class="rounded-t-md servicesImageHeight bg-blue-200" alt="">
+                            <div class="px-10 pb-6">
+                                <h2 class="pt-3 font-bold text-2xl text-gray-800">Web Applications</h2>
+                                <p class="pt-3">
+                                    I build web applications for a wide variety of use cases, ranging from an
+                                    organization to an individual using various technologies that support B2B and B2C
+                                    framework and standards.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div
+                            class="absolute z-10 inset-0 bg-gradient-to-r from-primary to-secondary shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg">
+                        </div>
+                        <div class="relative z-20 bg-white h-full rounded-md shadow-md">
+                            <img src="./images/services/mobile.jpg" class="rounded-t-md servicesImageHeight" alt="">
+                            <div class="px-10 pb-6">
+                                <h2 class="pt-3 font-bold text-2xl text-gray-800">Mobile Applications</h2>
+                                <p class="pt-3">
+                                    I work with a team that builds and deploy modern mobile applications using popular
+                                    languages and will be tailored to your business needs.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="projects" class="_py-20 px-8">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center">
+                    <h1 class="text-6xl font-bold text-gray-700">Projects</h1>
+                    <p class="pt-5 text-xl">Check below for some of my most recent designs.</p>
+                </div>
 
-		<!-- My work -->
-		<div class="container mt-64 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full">
-			<section class="w-full">
-				<h2 id="work" class="secondary-title">My work</h2>
-				<p class="section-paragraph">I’ve had the pleasure of working with multiple Fortune 500 companies, designing and implementing both frontend and backend.</p>
+                <div class="grid mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/react-dashboard.jpeg"
+                            alt="hospital management app">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">React Dashboard Application</h3>
+                            <small>Hooks & Refs | Context API | Syncfusion </small>
+                            <p class="pt-3">
+                                Fully mobile responsive and customizable React Dashboard Application where advanced best
+                                React practices such as: Folder and File structure, Hooks and Refs are
+                                used. There are many different components in many different pages in this app and a
+                                general possibility of scalling smaller React Apps to a higher enterprise level size can
+                                be achieved with this project. This Admin Dashboard is fully mobile responsive, which
+                                makes it feel like a native mobile application.
+                                <br><br>
+                                This Admin Panel includes one dashboard, three pages, four apps and seven fully
+                                functional charts. The Orders Page includes a pagination system, the Employees table
+                                includes a completely functional search and filtering
+                                functionality, while the Customers user table is fully editable, which means you can
+                                select multiple rows and
+                                delete them, as well as edit each view individually. Sidebar can also be collapsed to
+                                view the contents in its entirety.
+                                <br><br>
+                                The dashboard has a beautiful view of all the most important metrics
+                                such as; earning, recent transactions, sales overview and more. There are 6 beautiful
+                                theme colors as well as toggle between the dark and light modes
+                                <br><br>
+                                Below are four major apps that are crucial to almost any dashboard included in this
+                                project:
+                            <ul class="text-sm mt-2 italic list-decimal space-y-2 py-3">
+                                <li>
+                                    First App is a fully functioning calendar - you can drag n drop events, and edit the
+                                    title, locations, start and end dates and every single other little detail
+                                    The calendar view can be changed from Day, Week, Month and even an Agenda list
+                                </li>
+                                <li>
+                                    The 2nd App is a Kanbn Board, just like an entire Jira app right inside of our
+                                    dashboard
+                                </li>
+                                <li>
+                                    Third App is a fully-fledged wysiwyg editor, you can make texts bold, add images and
+                                    essentially modify the texts in anyway you can think of
+                                </li>
+                                <li>
+                                    The fourth is a Color Picker App, highly useful if you want to allow your user to
+                                    choose
+                                    specific colors, for example to theme their applications
+                                </li>
+                            </ul>
+                            </p>
+                            <p>There are 7 different kinds of charts (Line, Area, Bar, Pie, Financial, Color-Mapping and
+                                Pyramid Charts). Additional widgets like a Shopping Carts, the Chat, Notifications and a
+                                User Profile are also embedded.
+                            </p><br>
+                            <p>
+                                Advanced state of the entire application is managed using React Context API. Mmost
+                                importantly, i used Syncfusion - the world's best UI component for building
+                                powerful web, desktop and mobile applications
+                            </p><br>
+                            <p>
+                                This is not a specialized dashboard, which means that each piece of it can be used for
+                                absolutely any app.
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah-portfolio/react-admin-dashboard" target="_blank">
+                                Github
+                            </a>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://react-syncfusion-admin-dashboard.netlify.app/" target="_blank">
+                                External Link
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/ecommdashoard.jpg"
+                            alt="hospital management app">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">E-commerce Products Dashboard</h3>
+                            <small>Laravel | Postman | React Hooks | Bootstrap | MySql | Router</small>
+                            <p class="pt-3">
+                                A complete ecommerce crud project for react and laravel, it's basically an ecommerce
+                                dashboard that enables authenticated users to upload products with images.
+                                This project focuses more on the logic than the design. For state management, a Hook was
+                                used and no Redux - it's a simple project.
+                                The API is written in laravel while the frontend is designed using ReactJs to consume
+                                the backend API.
+                                <br><br>
+                                Some of the modules in this project are:
+                                1. Login
+                                2. Signup
+                                3. Product Listing
+                                4. Adding of products
+                                5. Delete Product
+                                6. Update Product
+                                7. Search integration
+                                8. Image Upload
+                                9. React routing
+                                10. Bootstrap.
 
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-					<img src="https://images.unsplash.com/photo-1576153192396-180ecef2a715?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80" class="w-full bg-nav h-36 lg:h-72 object-cover">
-					<img src="https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" class="w-full bg-nav h-36 lg:h-72 object-cover">
-					<img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80" class="w-full hidden md:block bg-nav h-36 lg:h-72 object-cover">
-					<img src="https://images.unsplash.com/photo-1558655146-d09347e92766?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=764&q=80" class="w-full hidden md:block bg-nav h-36 lg:h-72 object-cover">
-					<img src="https://images.unsplash.com/photo-1547119957-637f8679db1e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80" class="w-full hidden md:block bg-nav h-36 lg:h-72 object-cover">
-					<img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1336&q=80" class="w-full hidden md:block bg-nav h-36 lg:h-72 object-cover">
-					<img src="https://images.unsplash.com/photo-1603969072881-b0fc7f3d77d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80s" class="w-full hidden md:block bg-nav h-36 lg:h-72 object-cover">
-					<img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" class="w-full hidden md:block bg-nav h-36 lg:h-72 object-cover">
-					<img src="https://images.unsplash.com/photo-1545235617-7a424c1a60cc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80" class="w-full hidden md:block md:col-span-2 lg:col-span-1 bg-nav h-36 lg:h-72 object-cover">
-				</div>
-			</section>
-		</div>
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah-portfolio/hospital" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/hospital.jpg"
+                            alt="hospital management app">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Hospital Management App</h3>
+                            <small>Laravel | Livewire | Email Mail Notification</small>
+                            <p class="pt-3">
+                                Hospital management app built with Laravel 9. It has regular and admin user and allows
+                                both logged in and non logged in
+                                users to book an appointment with the doctor. Logged in users can view their
+                                appointments and have the privilege to
+                                cancel an appointment on their own.
 
+                                Admin can add employee, update or delete an employee record, assign salary to employee,
+                                confirm or cancel a
+                                user appointment etc ... upon registration, an email notification is automatically sent
+                                to the user.
 
+                                Also, the Admin/Doctor can respond to the user's appointment request with a custom
+                                message that will be delivered directly to their email.
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah-portfolio/hospital" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/laravel-gigs.jpg"
+                            alt="Gigs job listing">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Job/Gigs</h3>
+                            <small>Laravel | Breeze | Queued Mail Notification</small>
+                            <p class="pt-3">
+                                This project is a fully functioning job gigs site designed with Laravel. I use
+                                migrations and factories to create and seed the database.
+                                The breeze package was installed and configured for authentication to developed both a
+                                landing page and an individual listing page with the
+                                help of blade components and tailwind css which enable end users to register, create
+                                listings to be displayed on the job board. When Gigs are created
+                                or deleted, job notification is queued and an email alert is sent to an administrator.
 
+                                Laravel resource routing was used to assign the typical CRUD operations (create, read,
+                                update, and delete) to a controller with a single line of code
+                                Resource Routes. For implicit binding, i used Route Model Bindings to automatically
+                                inject the model instances directly into the routes.
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah-portfolio/laravel-gigs" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-		<!-- Clients -->
-		<div class="container mt-64 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full">
-			<section class="w-full">
-				<h2 id="clients" class="secondary-title">Clients</h2>
-				<p class="section-paragraph">I’ve had the pleasure of working with multiple Fortune 500 companies, designing and implementing both frontend and backend.</p>
+                <div class="grid mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/movieland.jpg" alt="">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Movieland</h3>
+                            <small>React | Hooks | API</small>
+                            <p class="pt-3">
+                                Movieland is a simplified version of filmpire application where you get access to all of
+                                the movies that you search for.
+                                The app is built using different components, props and so much more and it's fully
+                                mobile responsive.
+                                Some of the main concepts around this app are: managing of state, hooks and an external
+                                api that gives access to data about the movies
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah-portfolio/movieland" target="_blank">
+                                Github
+                            </a>
 
-				<!-- Clients -->
-				<div class="space-y-12 my-16">
-					<div class="w-full border border-nav p-16 lg:px-32 lg:py-20 lg:space-x-32 flex justify-center lg:justify-start flex-wrap lg:flex-nowrap">
-						
-						<!-- Client logo -->
-						<div class="mb-6 lg:mb-0">
-							<svg width="80" height="96" viewBox="0 0 80 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M66.6983 92.1599C61.5487 97.2095 55.867 96.4223 50.4513 94.0415C44.6936 91.6127 39.4299 91.4591 33.3492 94.0415C25.7767 97.3439 21.7577 96.3839 17.1972 92.1599C-8.55106 65.3759 -4.75058 24.5759 24.5131 23.0399C31.6105 23.4239 36.5796 27.0047 40.7601 27.3023C46.9739 26.0255 52.9216 22.3679 59.5724 22.8479C67.5629 23.5007 73.5392 26.6879 77.5297 32.4191C61.0926 42.4031 64.9881 64.2911 80.0855 70.4351C77.0641 78.4511 73.1876 86.3711 66.6888 92.2271L66.6983 92.1599ZM40.19 22.7519C39.4204 10.8479 48.9691 1.05595 59.9525 0.0959473C61.4632 13.8239 47.6009 24.0959 40.19 22.7519Z" fill="white"/></svg>
-						</div>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://movieland-ten.vercel.app/" target="_blank">
+                                External Link
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md"
+                            src="./images/projects/real-nextjs-estate.jpg" alt="modern react real estate app">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Modern Real Estate App</h3>
+                            <small>React & Next.js</small>
+                            <p class="pt-3">
+                                A React and Next.js real estate application with some dynamic and cool features such as;
+                                property filtering,
+                                property details page, image carousel and much more.
+                                This app is developed with advance react best practices such as folder and file
+                                structure and react hooks.
+                                It also implements some NEXT.js best practices such as Static Generation, Server Side
+                                Rendering and so on ...
+                                The User interface is created using chakra UI and the data are fetched from an unlimited
+                                sources using Rapid Api.
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah-portfolio/realestate" target="_blank">
+                                Github
+                            </a>
 
-						<!-- Client info -->
-						<div class="flex flex-wrap justify-center text-center lg:text-left lg:block">
-							<h3 class="text-white text-3xl font-semibold">Apple, inc.</h3>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://real-nextjs-estate.vercel.app/" target="_blank">
+                                External Link
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/casino.jpg"
+                            alt="casino affiliate website">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Casino Affiliate</h3>
+                            <small>Laravel | Vue.js | Vuex </small>
+                            <p class="pt-3">Casino Affiliate</p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah-portfolio/casino-affiliate-website" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md">
+                        <img class="object-cover w-full h-80 rounded-t-md"
+                            src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Paperless_work_desk_with_an_iPad%2C_iMac_and_a_MacBook.jpg"
+                            alt="">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Laravel Sanctum Rest API</h3>
+                            <small>Laravel | Sqlite Database | Sqlite Browser | Sanctum</small>
+                            <p class="pt-3">
+                                A restful api created with authentication using laravel 8 and laravel santum for access
+                                tokens. basically,
+                                it has a crud api that creates, reads, updates, deletes and search products. The REST
+                                API implements authentication
+                                so user can basically login, send requests to login routes, get an access token and use
+                                the access token to access
+                                protected routes to be able to create a product, update and delete.
 
-							<div class="w-full lg:w-auto flex flex-wrap justify-center lg:justify-start gap-3 mt-6 mb-8">
-								<div class="badge">UI/UX</div>
-								<div class="badge">Frontend development</div>
-							</div>
+                                I used a postman to basically work with the api to send requests, i will consider
+                                designing its frontend later on in the future...
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah/laravel-sanctum-rest-api" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-							<p class="text-secondary">I’ve had the pleasure of working with multiple Fortune 500 companies, designing and implementing both frontend and backend.</p>
-						</div>
+                <div class="grid mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
+                    <div class="bg-white rounded-md shadow-md">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/rdci.jpg"
+                            alt="church website">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Church Website (<small>Royal Diadem Chapel
+                                    Int'l</small>)</h3>
+                            <small>PHP | WordPress | Elementor</small>
+                            <p class="pt-3">
+                                Inspiring website designed for the ministration of Royal Diadem Chapel International.
+                            </p>
+                            <a href="https://rdci.org" class="
+                                    inline-block
+                                    mt-4
+                                    px-6
+                                    py-2
+                                    bg-gradient-to-r
+                                    from-primary
+                                    to-secondary
+                                    rounded-md
+                                    shadow-md
+                                    text-white
+                                    font-bold
+                                    text-sm
+                                " target="_blank">
+                                External Link
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/brandedge.jpg"
+                            alt="on demand printing web app">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">On Demand Ecommerce Printing App (<small>Brand
+                                    Edge</small>)</h3>
+                            <small>Wordpress | WooCommerce | Lumise | Elementor</small>
+                            <p class="pt-3">
+                                From t-shirts to posters, backpacks to books, you can put your own original spin on
+                                everyday products and sell them online.
+                            </p>
+                            <a href="https://brandedgeng.com/development" class="
+                                    inline-block
+                                    mt-4
+                                    px-6
+                                    py-2
+                                    bg-gradient-to-r
+                                    from-primary
+                                    to-secondary
+                                    rounded-md
+                                    shadow-md
+                                    text-white
+                                    font-bold
+                                    text-sm
+                                " target="_blank">
+                                External Link
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/lsm.jpg"
+                            alt="automotive website">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Automobile Web App <small>(Lanre Shittu
+                                    Motors)</small></h3>
+                            <small>Wordpress | Elementor</small>
+                            <p class="pt-3">
+                                Every auto shop has multiple things to manage at a time. The software automates stock
+                                control, service reminders,
+                                customer direct messaging, job status, supplier integration, customer experience along
+                                with accounting and financing. This scenario is the best way to ensure that
+                                everything is done correctly.
+                            </p>
+                            <a class="
+                                 inline-block
+                                 mt-4
+                                 px-6
+                                 py-2
+                                 bg-gradient-to-r
+                                 from-primary
+                                 to-secondary
+                                 rounded-md
+                                 shadow-md
+                                 text-white
+                                 font-bold
+                                 text-sm
+                                " target="_blank" href="https://lanreshittu.com">
+                                External Link
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md">
+                        <img class="object-cover w-full h-80 rounded-t-md"
+                            src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Paperless_work_desk_with_an_iPad%2C_iMac_and_a_MacBook.jpg"
+                            alt="ecommerce web app">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Multi-Vendor Ecommerce</h3>
+                            <small>Bootstrap | Laravel | JavaScript | Ajax</small>
+                            <p class="pt-3">
+                                This project was originally designed using a Laravel 5 Framework, it was later upgraded
+                                to Laravel 6. In September 2019,
+                                i then upgraded it to Laravel 7 when the update was first released. Currently, i am
+                                working on its upgrade to be compatible
+                                with the latest Laravel version.
+                                There are over 4,000 products listed on this platform by various product vendors
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="#" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-					</div>
-					<div class="w-full border border-nav p-16 lg:px-32 lg:py-20 lg:space-x-32 flex justify-center lg:justify-start flex-wrap lg:flex-nowrap">
-						
-						<!-- Client logo -->
-						<div class="mb-6 lg:mb-0">
-							<svg width="80" height="96" viewBox="0 0 80 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M66.6983 92.1599C61.5487 97.2095 55.867 96.4223 50.4513 94.0415C44.6936 91.6127 39.4299 91.4591 33.3492 94.0415C25.7767 97.3439 21.7577 96.3839 17.1972 92.1599C-8.55106 65.3759 -4.75058 24.5759 24.5131 23.0399C31.6105 23.4239 36.5796 27.0047 40.7601 27.3023C46.9739 26.0255 52.9216 22.3679 59.5724 22.8479C67.5629 23.5007 73.5392 26.6879 77.5297 32.4191C61.0926 42.4031 64.9881 64.2911 80.0855 70.4351C77.0641 78.4511 73.1876 86.3711 66.6888 92.2271L66.6983 92.1599ZM40.19 22.7519C39.4204 10.8479 48.9691 1.05595 59.9525 0.0959473C61.4632 13.8239 47.6009 24.0959 40.19 22.7519Z" fill="white"/></svg>
-						</div>
+                <div class="grid mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
+                    <div class="bg-white rounded-md shadow-md">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/hotel.jpg"
+                            alt="all-in-on online booking system">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">All-in-One Online Booking & Hotel System</h3>
+                            <small>Bootstrap | PHP/MySql | JavaScript</small>
+                            <p class="pt-3">
+                                This project helps you build a hotel, travel website and travel market. Its services
+                                include renting a homestay, creating experiences (tours, activities, events), car
+                                rental. The software displays information about balance, booking information, booking
+                                chart, and the latest homes.
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="#" target="_blank">
+                                External Link
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md"
+                            src="https://hbr.org/resources/images/article_assets/2014/10/Mar20_05_1187745190.jpg"
+                            alt="school calendar time table">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">School Time Table Calendar (Laravel)</h3>
+                            <small>Laravel | JavaScript | Ajax</small>
+                            <p class="pt-3">
+                                School calendar demo timetable
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="#">View More</a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/quiz.jpg"
+                            alt="vue.js quiz web app">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">VueJs Quiz Web App</h3>
+                            <small>Vue.js | Axios</small>
+                            <p class="pt-3">
+                                A simple Web App designed by implementing both some basic and advanced VueJs features,
+                                such as; Dynamic Class for conditional component
+                                styling, Watcher Property that helps to listen to the component data whenever it
+                                changes. Also, i implemented a Lodash JavaScript library
+                                which provides some utility functions that helped run shuffles randomly on the questions
+                                that are being generated
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah/VuejsQuiz" target="_blank">Github
+                            </a>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="#http://vuejs-quiz-practice.herokuapp.com" target="_blank">
+                                External Link
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/pets.jpg"
+                            alt="vuejs pets project">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Vue Pet Project</h3>
+                            <small>Vue.js | Vuex</small>
+                            <p class="pt-3">
+                                On this sample pet project, a Vue Router was implemented to sync the URLs to their
+                                corresponding views in the app. I also
+                                installed the Vue-pluralize library in the project to attach the pluralized instance to
+                                some texts on the app. SASS
+                                was adopted as an extension of CSS which enabled me to use features like variables,
+                                nested rules, inline imports
+                                and more. It also helps to keep things organized and allowed the creation of the style
+                                sheets to be faster.
 
-						<!-- Client info -->
-						<div class="flex flex-wrap justify-center text-center lg:text-left lg:block">
-							<h3 class="text-white text-3xl font-semibold">Apple, inc.</h3>
+                                Using Vuex Store, i organized and centralized the app data. Also, mapState, Getters and
+                                Mutation were used with
+                                other local computed variables to calculate data based on Store state
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah/vue_pet_project" target="_blank">
+                                Github
+                            </a>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="#http://vue-pets-project.herokuapp.com)" target="_blank">
+                                External Link
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-							<div class="w-full lg:w-auto flex flex-wrap justify-center lg:justify-start gap-3 mt-6 mb-8">
-								<div class="badge">UI/UX</div>
-								<div class="badge">Frontend development</div>
-							</div>
+                <div class="grid mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
+                    <div class="bg-white rounded-md shadow-md">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/laravel-paystack.webp"
+                            alt="paystack payment gateway">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Laravel Payment Gatway Package for Paystack
+                            </h3>
+                            <small>Laravel | Packagist</small>
+                            <p class="pt-3">
+                                Paystack payment gateway package designed for Laravel 6
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah/laravel-paystack" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/online-banking.jpg"
+                            alt="online banking">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Online Banking Demo</h3>
+                            <small>PHP | MySQL | JavaScript</small>
+                            <p class="pt-3">
 
-							<p class="text-secondary">I’ve had the pleasure of working with multiple Fortune 500 companies, designing and implementing both frontend and backend.</p>
-						</div>
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah-portfolio/online-banking" target="_blank">Github</a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/todo.jpg"
+                            alt="todo list app">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Todo List App (VueJs & Laravel)</h3>
+                            <p class="pt-3">
+                                Todo list wep app
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah/todo_laravel_vuejs_app" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/tesla.jpg"
+                            alt="tesla clone">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Tesla Clone</h3>
+                            <small>Vue.js | Laravel</small>
+                            <p class="pt-3">
+                                Building a Tesla website landing page using Vuejs and Laravel
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah-portfolio/tesla-clone-vuejs-laravel-main"
+                                target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-					</div>
-					<div class="w-full border border-nav p-16 lg:px-32 lg:py-20 lg:space-x-32 flex justify-center lg:justify-start flex-wrap lg:flex-nowrap">
-						
-						<!-- Client logo -->
-						<div class="mb-6 lg:mb-0">
-							<svg width="80" height="96" viewBox="0 0 80 96" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M66.6983 92.1599C61.5487 97.2095 55.867 96.4223 50.4513 94.0415C44.6936 91.6127 39.4299 91.4591 33.3492 94.0415C25.7767 97.3439 21.7577 96.3839 17.1972 92.1599C-8.55106 65.3759 -4.75058 24.5759 24.5131 23.0399C31.6105 23.4239 36.5796 27.0047 40.7601 27.3023C46.9739 26.0255 52.9216 22.3679 59.5724 22.8479C67.5629 23.5007 73.5392 26.6879 77.5297 32.4191C61.0926 42.4031 64.9881 64.2911 80.0855 70.4351C77.0641 78.4511 73.1876 86.3711 66.6888 92.2271L66.6983 92.1599ZM40.19 22.7519C39.4204 10.8479 48.9691 1.05595 59.9525 0.0959473C61.4632 13.8239 47.6009 24.0959 40.19 22.7519Z" fill="white"/></svg>
-						</div>
+                <div class="grid mt-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/projects/newsletter.jpg"
+                            alt="newsletter subscription">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Newsletter</h3>
+                            <small>REST Api | Laravel | Mysql</small>
+                            <p class="pt-3">
+                                A simple subscription platform(RESTful APIs with MySQL) in which users are able to
+                                subscribe to a website. Whenever a new post is published on a particular website, all
+                                it's subscribers receive an automatic email with the post title and description in it.
+                                (no authentication of any kind is required)
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="https://github.com/phemorah-portfolio/newsletter" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md">
+                        <img class="object-cover w-full h-80 rounded-t-md"
+                            src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Paperless_work_desk_with_an_iPad%2C_iMac_and_a_MacBook.jpg"
+                            alt="investment">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Online Investment</h3>
+                            <p class="pt-3"></p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="#">View More</a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md">
+                        <img class="object-cover w-full h-80 rounded-t-md" src="./images/laptop-home-office.jpg"
+                            alt="delivery system">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Delivery System</h3>
+                            <p class="pt-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione nisi iure
+                                labore aperiam ab officiis assumenda deserunt magni nam earum!</p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="#">View More</a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md"
+                            src="https://hbr.org/resources/images/article_assets/2014/10/Mar20_05_1187745190.jpg"
+                            alt="crud app">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">Crud Application (Laravel)</h3>
+                            <p class="pt-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione nisi iure
+                                labore aperiam ab officiis assumenda deserunt magni nam earum!</p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="#">View More</a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md shadow-md lg:col-span-2">
+                        <img class="object-cover w-full h-80 rounded-t-md"
+                            src="https://hbr.org/resources/images/article_assets/2014/10/Mar20_05_1187745190.jpg"
+                            alt="school e-learning">
+                        <div class="p-8 overflow-y-auto h-96">
+                            <h3 class="text-2xl font-bold text-gray-800">E-Learning</h3>
+                            <p class="pt-3">
+                                Multi Tenancy e-Learning and school management web portal, I played a key role in both
+                                back and frontend coding, debugging, including the general database
+                                design architecture and the programming logics.
+                            </p>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="#" target="_blank">
+                                Github
+                            </a>
+                            <a class="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm"
+                                href="#">
+                                External Link
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="contact" class="pt-10 pb-36 px-8 bg-gray-50">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center">
+                    <h1 class="md:text-6xl text-4xl font-bold text-gray-700">Get In Touch With Me</h1>
+                    <p class="pt-2 text-xl md:w-1/2 relative left-1/2 transform -translate-x-1/2">
+                        I’m open to any new opportunities... You can send me a mail if you need my freelance support or
+                        for any inquiry related to my field of expertise.
+                    </p>
+                </div>
+                <div class="mt-16 relative max-w-4xl mx-auto">
+                    <div
+                        class="absolute z-10 inset-0 bg-gradient-to-r from-primary to-secondary shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-lg">
+                    </div>
+                    <div class="relative z-20 bg-white rounded-md shadow-md p-12">
+                        <form action="mailto:phemorah@gmail.com" method="POST" enctype="multipart/form-data"
+                            name="EmailForm">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                                <input required type="text" placeholder="Name"
+                                    class="border border-gray-200 outline-none px-4 py-2 rounded-md hover:border-gray-400 focus:border-gray-600">
+                                <input required type="email" placeholder="Email"
+                                    class="border border-gray-200 outline-none px-4 py-2 rounded-md hover:border-gray-400 focus:border-gray-600">
+                                <input required
+                                    class="border border-gray-200 outline-none px-4 py-2 rounded-md hover:border-gray-400 focus:border-gray-600 md:col-span-2"
+                                    type="text" placeholder="Subject">
+                                <textarea required name="" id="" cols="30" rows="10"
+                                    class="border border-gray-200 outline-none px-4 py-2 rounded-md hover:border-gray-400 focus:border-gray-600 md:col-span-2"
+                                    placeholder="Message"></textarea>
+                            </div>
+                            <button type="submit" _disabled
+                                class="inline-block w-auto mt-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-md shadow-md text-white font-bold text-sm">Send
+                                Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-						<!-- Client info -->
-						<div class="flex flex-wrap justify-center text-center lg:text-left lg:block">
-							<h3 class="text-white text-3xl font-semibold">Apple, inc.</h3>
+    <footer class="p-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
+        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 Copyright. All Rights Reserved.
+        </span>
+        <ul class="flex flex-wrap items-center mt-3 sm:mt-0">
+            <li>
+                <a href="#about" class="mr-4 text-sm text-gray-500 hover:underline md:mr-6 dark:text-gray-400">About</a>
+            </li>
+            <li>
+                <a href="#services"
+                    class="mr-4 text-sm text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Services</a>
+            </li>
+            <li>
+                <a href="#projects"
+                    class="mr-4 text-sm text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Projects</a>
+            </li>
+            <li>
+                <a href="#contact" class="text-sm text-gray-500 hover:underline dark:text-gray-400">Contact</a>
+            </li>
+        </ul>
+    </footer>
 
-							<div class="w-full lg:w-auto flex flex-wrap justify-center lg:justify-start gap-3 mt-6 mb-8">
-								<div class="badge">UI/UX</div>
-								<div class="badge">Frontend development</div>
-							</div>
+    <footer class="text-center bg-gray-900 text-white">
+        <div class="container px-6 pt-6">
+            <div class="flex justify-center mb-6">
+                <a href="https://twitter.com/phemorah1" target="_blank" type="button"
+                    class="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter"
+                        class="w-3 h-full mx-auto" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path fill="currentColor"
+                            d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z">
+                        </path>
+                    </svg>
+                </a>
 
-							<p class="text-secondary">I’ve had the pleasure of working with multiple Fortune 500 companies, designing and implementing both frontend and backend.</p>
-						</div>
+                <a href="https://www.instagram.com/phemorah1/" target="_blank" type="button"
+                    class="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram"
+                        class="w-3 h-full mx-auto" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path fill="currentColor"
+                            d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
+                        </path>
+                    </svg>
+                </a>
 
-					</div>
-				</div>
+                <a href="https://www.linkedin.com/in/femi-ajao-85171b31/" target="_blank" type="button"
+                    class="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="linkedin-in"
+                        class="w-3 h-full mx-auto" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path fill="currentColor"
+                            d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z">
+                        </path>
+                    </svg>
+                </a>
 
-			</section>
-		</div>
+                <a href="https://www.github.com/phemorah" target="_blank" type="button"
+                    class="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github"
+                        class="w-3 h-full mx-auto" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                        <path fill="currentColor"
+                            d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z">
+                        </path>
+                    </svg>
+                </a>
+            </div>
+        </div>
 
-
-		<!-- Hire me -->
-		<div class="container mt-64 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full">
-			<section class="w-full">
-				<h2 id="hire" class="secondary-title">Hire me</h2>
-				<p class="section-paragraph">Feel free to to contact me any time, through any method below.</p>
-
-				<div class="w-full grid lg:grid-cols-2 gap-8 lg:gap-32 mt-24">
-					<div class="space-y-12">
-						<div>
-							<label class="text-white block mb-6 text-xl font-bold">Name</label>
-							<input class="w-full border border-input-border bg-input px-4 py-4">
-						</div>
-						<div>
-							<label class="text-white block mb-6 text-xl font-bold">Email</label>
-							<input type="email" class="w-full border border-input-border bg-input px-4 py-4">
-						</div>
-						<div>
-							<label class="text-white block mb-6 text-xl font-bold">Message</label>
-							<textarea type="email" class="w-full border border-input-border bg-input px-4 py-4 h-56 resize-none"></textarea>
-						</div>
-						<button class="px-6 py-2 bg-theme text-white font-bold">Send it!</button>
-					</div>
-
-					<div class="mt-12">
-						<!-- Contact info -->
-						<p class="text-secondary">555-555-1234</p>
-						<a href="mailto:email@mydomain.com" class="text-secondary underline mt-3 block">email@mydomain.com</a>
-
-						<!-- Socials -->
-						<div class="flex mt-20 space-x-6">
-							<!-- Skype -->
-							<a href="#">
-								<svg class="w-8 h-8 lg:w-12 lg:h-12" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M43.1494 28.252C43.3496 27.1533 43.457 26.0303 43.457 24.9072C43.457 22.417 42.9688 20 42.0068 17.7295C41.0791 15.5322 39.7461 13.5596 38.0518 11.8652C36.3716 10.1808 34.3799 8.83914 32.1875 7.91504C29.9121 6.95313 27.5 6.46484 25.0098 6.46484C23.8379 6.46484 22.6611 6.57715 21.5186 6.79687C19.9376 5.9591 18.176 5.51995 16.3867 5.51758C13.4717 5.51758 10.7275 6.65527 8.66699 8.71582C7.65021 9.72738 6.84403 10.9305 6.29507 12.2555C5.74611 13.5806 5.46526 15.0013 5.46875 16.4355C5.46875 18.291 5.94727 20.1172 6.84082 21.7285C6.66016 22.7734 6.5625 23.8428 6.5625 24.9072C6.5625 27.3975 7.05078 29.8145 8.0127 32.085C8.94043 34.2822 10.2686 36.2549 11.9629 37.9492C13.6572 39.6436 15.6299 40.9717 17.8272 41.8994C20.1025 42.8613 22.5147 43.3496 25.0049 43.3496C26.0889 43.3496 27.1729 43.252 28.2373 43.0615C29.8731 43.9844 31.7188 44.4775 33.6084 44.4775C36.5234 44.4775 39.2676 43.3447 41.3281 41.2793C43.3936 39.2188 44.5264 36.4746 44.5264 33.5596C44.5313 31.7041 44.0527 29.873 43.1494 28.252ZM25.083 36.2061C18.5303 36.2061 15.6006 32.9834 15.6006 30.5713C15.6006 29.3311 16.5137 28.4668 17.7734 28.4668C20.5762 28.4668 19.8535 32.4951 25.083 32.4951C27.7637 32.4951 29.2432 31.04 29.2432 29.5508C29.2432 28.6572 28.8037 27.6611 27.0361 27.2266L21.2061 25.7715C16.5137 24.5947 15.6592 22.0557 15.6592 19.6729C15.6592 14.7217 20.3223 12.8613 24.7022 12.8613C28.7354 12.8613 33.4912 15.0928 33.4912 18.0615C33.4912 19.3359 32.3877 20.0732 31.1279 20.0732C28.7354 20.0732 29.1748 16.7627 24.3555 16.7627C21.9629 16.7627 20.6397 17.8467 20.6397 19.3945C20.6397 20.9424 22.5293 21.4355 24.1699 21.8115L28.4863 22.7686C33.2129 23.8232 34.4092 26.582 34.4092 29.1797C34.4092 33.1982 31.3184 36.2061 25.083 36.2061Z" fill="white"/></svg>
-							</a>
-							<!-- Twitter -->
-							<a href="#">
-								<svg class="w-8 h-8 lg:w-12 lg:h-12" width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 0C9.40313 0 0 9.40313 0 21C0 32.5969 9.40313 42 21 42C32.5969 42 42 32.5969 42 21C42 9.40313 32.5969 0 21 0ZM31.0922 15.8297C31.1062 16.05 31.1062 16.2797 31.1062 16.5047C31.1062 23.3859 25.8656 31.3125 16.2891 31.3125C13.3359 31.3125 10.5984 30.4547 8.29219 28.9781C8.71406 29.025 9.11719 29.0437 9.54844 29.0437C11.9859 29.0437 14.2266 28.2188 16.0125 26.8219C13.725 26.775 11.8031 25.275 11.1469 23.2125C11.9484 23.3297 12.6703 23.3297 13.4953 23.1188C12.3175 22.8795 11.2588 22.2398 10.4991 21.3084C9.73949 20.377 9.32572 19.2113 9.32812 18.0094V17.9437C10.0172 18.3328 10.8281 18.5719 11.6766 18.6047C10.9633 18.1293 10.3784 17.4854 9.97365 16.7298C9.5689 15.9743 9.35683 15.1306 9.35625 14.2734C9.35625 13.3031 9.60938 12.4172 10.0641 11.6484C11.3714 13.2578 13.0028 14.5741 14.8522 15.5117C16.7016 16.4493 18.7275 16.9873 20.7984 17.0906C20.0625 13.5516 22.7063 10.6875 25.8844 10.6875C27.3844 10.6875 28.7344 11.3156 29.6859 12.3281C30.8625 12.1078 31.9875 11.6672 32.9906 11.0766C32.6016 12.2812 31.7859 13.2984 30.7031 13.9406C31.7531 13.8281 32.7656 13.5375 33.7031 13.1297C32.9953 14.1703 32.1094 15.0938 31.0922 15.8297Z" fill="white"/></svg>								
-							</a>
-						</div>
-					</div>
-					
-				</div>
-
-			</section>
-		</div>
-
-        <script src="main.js"></script>
-
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.2);">
+            <a class="text-white" href="https://femiajao.info/">Designed & Built by Femi Ajao</a>
+        </div>
+    </footer>
 </body>
+<!-- Javascript Code -->
+<script>
+    var nav = document.getElementById('site-menu');
+    var header = document.getElementById('top');
+
+    window.addEventListener('scroll', function () {
+        if (window.scrollY >= 400) { // adjust this value based on site structure and header image height
+            nav.classList.add('nav-sticky');
+            header.classList.add('pt-scroll');
+        } else {
+            nav.classList.remove('nav-sticky');
+            header.classList.remove('pt-scroll');
+        }
+    });
+
+    function navToggle() {
+        var btn = document.getElementById('menuBtn');
+        var nav = document.getElementById('menu');
+
+        btn.classList.toggle('open');
+        nav.classList.toggle('flex');
+        nav.classList.toggle('hidden');
+    }
+</script>
+
 </html>
