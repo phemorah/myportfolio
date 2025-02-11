@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
+ 	<script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
 	<style>
         @layer base {
             html {
@@ -102,35 +104,46 @@
         }
     </style>
 </head>
-<body class="bg-body text-white font-poppins pb-12">
+<!-- <body class="bg-body text-white font-poppins pb-12"> -->
 	
-<!-- <body class="
+<body class="
+bg-body
+font-poppins pb-12
 antialised
 relative
-text-gray-600
+text-white
 " x-data="{navbarOpen: false, scrolledFromTop: false}"
 x-init="window.pageYOffset > 60 ? scrolledFromTop = true : scrolledFromTop = false"
-@scroll.window="window.pageYOffset > 60 ? scrolledFromTop = true : scrolledFromTop = false"> -->
+@scroll.window="window.pageYOffset > 60 ? scrolledFromTop = true : scrolledFromTop = false">
 
 	<main class="content">
-		<header class="py-6">
+		<header class="py-6 fixed top-0 left-0 w-full bg-gray-900 shadow-md z-50 py-4 transition-all duration-300">
 			<div class="container flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full">
 				<div class="text-lg font-bold"> <a href="#">
 					<img src="./img/logo.jpg" alt="Femi-Ajao Logo"
 						class="h-12 transition-all duration-200 w-12 rounded-full flex-shrink-0 border-6 _border-white shadow-md"
 						:class="{'h-12': !scrolledFromTop, 'h-10': scrolledFromTop}">
 				</a></div>
-				<div class="hidden md:flex space-x-12 items-center">
-					<a href="#" class="text-selected-text">Home</a>
-					<a href="#work">My work</a>
-					<a href="#skills">Skills</a>
-					<a href="#hire"><button class="px-6 py-2 bg-theme font-bold">Hire me</button></a>
-				</div>
-				<div class="md:hidden">
-					<svg width="26" height="18" viewBox="0 0 26 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 17.5H0.25V14.6667H13V17.5ZM25.75 10.4167H0.25V7.58333H25.75V10.4167ZM25.75 3.33333H13V0.5H25.75V3.33333Z" fill="white"/></svg>
+
+				<!-- Navbar Links -->
+				<nav id="menu" class="hidden fixed md:flex space-x-12 items-center absolute top-16 right-10 bg-gray-900 md:relative md:top-0 md:bg-transparent">
+					<div class="flex flex-col md:flex-row md:items-center w-full space-y-4 md:space-y-0 md:space-x-12 p-4 md:p-0">
+						<a href="#" class="text-selected-text text-white text-lg">Home</a>
+						<a href="#work" class="text-white text-lg">My work</a>
+						<a href="#skills" class="text-white text-lg">Skills</a>
+						<a href="#hire" class="text-white text-lg"><button class="px-6 py-2 bg-theme font-bold">Hire me</button></a>
+					</div>
+				</nav>
+
+				<!-- Mobile Hamburger Menu -->
+				<div class="md:hidden" id="menuBtn" @click="navbarOpen = !navbarOpen">
+					<svg width="26" height="18" viewBox="0 0 26 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M13 17.5H0.25V14.6667H13V17.5ZM25.75 10.4167H0.25V7.58333H25.75V10.4167ZM25.75 3.33333H13V0.5H25.75V3.33333Z" fill="white"/>
+					</svg>
 				</div>
 			</div>
 		</header>
+
 
 		<div class="container mt-16 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full">
 			<div class="flex flex-wrap md:flex-nowrap">
@@ -1005,4 +1018,42 @@ x-init="window.pageYOffset > 60 ? scrolledFromTop = true : scrolledFromTop = fal
 	<script src="main.js"></script>
 
 </body>
+<!-- Javascript Code -->
+<script>
+    var nav = document.getElementById('site-menu');
+    var header = document.getElementById('top');
+
+    window.addEventListener('scroll', function () {
+        if (window.scrollY >= 400) { // adjust this value based on site structure and header image height
+            nav.classList.add('nav-sticky');
+            header.classList.add('pt-scroll');
+        } else {
+            nav.classList.remove('nav-sticky');
+            header.classList.remove('pt-scroll');
+        }
+    });
+
+    function navToggle() {
+        var btn = document.getElementById('menuBtn');
+        var nav = document.getElementById('menu');
+
+        btn.classList.toggle('open');
+        nav.classList.toggle('flex');
+        nav.classList.toggle('hidden');
+    }
+	document.getElementById('menuBtn').addEventListener('click', navToggle);
+</script>
+<!-- <script>
+    function navToggle() {
+        var btn = document.getElementById('menuBtn');
+        var nav = document.getElementById('menu');
+
+        btn.classList.toggle('open');
+        nav.classList.toggle('hidden');
+        nav.classList.toggle('flex'); 
+        nav.classList.toggle('md:flex'); // Ensure it stays flex in desktop
+    }
+
+</script> -->
+
 </html>
