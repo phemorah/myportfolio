@@ -977,27 +977,27 @@ x-init="window.pageYOffset > 60 ? scrolledFromTop = true : scrolledFromTop = fal
 			<section class="w-full px-10">
 				<h2 id="hire" class="secondary-title">Get In Touch With Me</h2>
 				<p class="section-paragraph">Feel free to to contact me any time, through any method below.</p>
-				<form action="mailto:phemorah@gmail.com" method="POST" enctype="multipart/form-data"
+				<form action="https://formspree.io/f/xkgovqbw" method="POST" enctype="multipart/form-data"
 				name="EmailForm">
 					<div class="w-full grid lg:grid-cols-2 gap-8 lg:gap-32 mt-24">
 						<div class="space-y-12">
 							<div>
 								<label class="text-white block mb-6 text-xl font-bold">Name</label>
-								<input required type="text" placeholder="Name" class="w-full border border-input-border bg-input px-4 py-4">
+								<input required type="text" name="name" placeholder="Name" class="w-full border border-input-border bg-input px-4 py-4">
 							</div>
 							<div>
 								<label class="text-white block mb-6 text-xl font-bold">Email</label>
-								<input required type="text" placeholder="Email" type="email" class="w-full border border-input-border bg-input px-4 py-4">
+								<input required type="text" placeholder="Email" type="email" name="email" class="w-full border border-input-border bg-input px-4 py-4">
 							</div>
 							<div>
 								<label class="text-white block mb-6 text-xl font-bold">Subject</label>
-								<input required type="text" placeholder="Subject" type="text" class="w-full border border-input-border bg-input px-4 py-4">
+								<input required type="text" name="subject" placeholder="Subject" type="text" class="w-full border border-input-border bg-input px-4 py-4">
 							</div>
 							<div>
 								<label class="text-white block mb-6 text-xl font-bold">Message</label>
-								<textarea type="email" class="w-full border border-input-border bg-input px-4 py-4 h-56 resize-none"></textarea>
+								<textarea type="email" name="message" class="w-full border border-input-border bg-input px-4 py-4 h-56 resize-none"></textarea>
 							</div>
-							<button class="px-6 py-2 bg-theme text-white font-bold">Send it!</button>
+							<button type="submit" class="px-6 py-2 bg-theme text-white font-bold">Send it!</button>
 						</div>
 
 						<div class="mt-12">
