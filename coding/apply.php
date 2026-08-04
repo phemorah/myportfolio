@@ -28,11 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     respond(405, false, 'Method not allowed.');
 }
 
-// Bots commonly fill hidden fields that human visitors never see.
-if (!empty($_POST['website'])) {
-    respond(200, true, 'Application received.');
-}
-
 $name = clean((string) ($_POST['name'] ?? ''), 120);
 $email = filter_var(trim((string) ($_POST['email'] ?? '')), FILTER_VALIDATE_EMAIL);
 $phone = clean((string) ($_POST['phone'] ?? ''), 40);
@@ -122,7 +117,7 @@ $body = "A new coding programme application has been received.\n\n"
     . 'Future updates consent: ' . ($marketingConsent ? 'Yes' : 'No') . "\n\n"
     . "Goal:\n{$goal}\n";
 $headers = [
-    'From: Femi Ajao Website <no-reply@femiajao.com>',
+    'From: Femi Ajao Website <hello@femiajao.com>',
     'Reply-To: ' . $email,
     'Content-Type: text/plain; charset=UTF-8',
     'X-Mailer: PHP/' . phpversion(),
