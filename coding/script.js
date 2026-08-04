@@ -37,8 +37,11 @@ form.addEventListener('submit', async (event) => {
     if (!response.ok || !result.ok) throw new Error(result.message || 'Submission failed');
 
     note.className = 'form-note success';
-    note.textContent = 'Application saved. Opening WhatsApp so you can send your message to Femi.';
+    const recordNumber = Number.isInteger(result.saved_records) ? ` Record #${result.saved_records}.` : '';
+    const emailStatus = result.email_queued ? ' Email notification queued.' : ' Email notification was not queued.';
+    note.textContent = `Application saved.${recordNumber}${emailStatus} Opening WhatsApp…`;
     form.reset();
+    await new Promise((resolve) => setTimeout(resolve, 900));
   } catch (error) {
     if (whatsappWindow) whatsappWindow.close();
     note.className = 'form-note error';
