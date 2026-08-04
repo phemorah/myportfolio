@@ -4,10 +4,10 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
-function respond($status, $ok, $message)
+function respond($status, $ok, $message, $details = [])
 {
     http_response_code($status);
-    echo json_encode(['ok' => $ok, 'message' => $message]);
+    echo json_encode(array_merge(['ok' => $ok, 'message' => $message], $details));
     exit;
 }
 
@@ -91,6 +91,28 @@ if (!$saved) {
     respond(500, false, 'The application could not be stored.');
 }
 
+// Keep a protected mirror in the website folder for easy access in hPanel.
+$mirrorFile = __DIR__ . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'coding-applications.csv';
+$mirrorDirectory = dirname($mirrorFile);
+if (!is_dir($mirrorDirectory)) {
+    @mkdir($mirrorDirectory, 0755, true);
+}
+if (is_writable($mirrorDirectory)) {
+    $mirrorIsNew = !file_exists($mirrorFile) || filesize($mirrorFile) === 0;
+    $mirrorHandle = @fopen($mirrorFile, 'ab');
+    if ($mirrorHandle !== false && flock($mirrorHandle, LOCK_EX)) {
+        if ($mirrorIsNew) {
+            fputcsv($mirrorHandle, ['Submitted at', 'Name', 'Email', 'WhatsApp', 'Goal', 'Future updates consent', 'IP address']);
+        }
+        fputcsv($mirrorHandle, array_map('csvSafe', [
+            $submittedAt, $name, (string) $email, $phone, $goal,
+            $marketingConsent ? 'Yes' : 'No', $ipAddress,
+        ]));
+        flock($mirrorHandle, LOCK_UN);
+        fclose($mirrorHandle);
+    }
+}
+
 $subject = 'New coding programme application — ' . $name;
 $body = "A new coding programme application has been received.\n\n"
     . "Submitted: {$submittedAt}\n"
@@ -107,6 +129,21 @@ $headers = [
 ];
 
 // Storage is the durable source of truth; email is a notification channel.
-@mail('hello@femiajao.com', $subject, $body, implode("\r\n", $headers));
+$emailQueued = @mail('hello@femiajao.com', $subject, $body, implode("\r\n", $headers));
 
-respond(200, true, 'Application saved successfully.');
+clearstatcache(true, $storageFile);
+$lineCount = 0;
+$countHandle = @fopen($storageFile, 'rb');
+if ($countHandle !== false) {
+    while (fgetcsv($countHandle) !== false) {
+        $lineCount++;
+    }
+    fclose($countHandle);
+}
+
+respond(200, true, 'Application saved successfully.', [
+    'saved_records' => max(0, $lineCount - 1),
+    'storage' => 'application_data/coding-applications.csv',
+    'file_manager_mirror' => 'public_html/coding/storage/coding-applications.csv',
+    'email_queued' => $emailQueued,
+]);
