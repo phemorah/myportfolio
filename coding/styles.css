@@ -4,3 +4,4 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
 .brand-mark{display:block;overflow:hidden;font-size:0}.brand-mark img{width:100%;height:100%;object-fit:cover}
 .apply .consent{display:grid;grid-template-columns:18px 1fr;align-items:start;gap:10px;font-size:11px;font-weight:500;letter-spacing:0;line-height:1.45;text-transform:none;color:#bdc8db}.apply .consent input{width:16px;height:16px;margin:1px 0 0;padding:0;accent-color:var(--orange)}.apply .consent em{color:#ffac68;font-style:normal}.website-field{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}.form-note.success{color:#78d9ad}.form-note.error{color:#ffb07a}.button[disabled]{cursor:wait;opacity:.7;transform:none}
+.form-note a{color:#fff;text-decoration:underline;font-weight:700}

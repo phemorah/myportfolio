@@ -4,20 +4,22 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
-function respond(int $status, bool $ok, string $message): never
+function respond($status, $ok, $message)
 {
     http_response_code($status);
     echo json_encode(['ok' => $ok, 'message' => $message]);
     exit;
 }
 
-function clean(string $value, int $maxLength): string
+function clean($value, $maxLength)
 {
     $value = trim(preg_replace('/\s+/u', ' ', $value) ?? '');
-    return mb_substr($value, 0, $maxLength);
+    return function_exists('mb_substr')
+        ? mb_substr($value, 0, $maxLength)
+        : substr($value, 0, $maxLength);
 }
 
-function csvSafe(string $value): string
+function csvSafe($value)
 {
     return preg_match('/^[=+\-@]/', $value) ? "'" . $value : $value;
 }
@@ -49,8 +51,12 @@ if (!preg_match('/^[0-9+()\-\s]{7,40}$/', $phone)) {
 $storageDirectory = __DIR__ . DIRECTORY_SEPARATOR . 'storage';
 $storageFile = $storageDirectory . DIRECTORY_SEPARATOR . 'coding-applications.csv';
 
-if (!is_dir($storageDirectory) && !mkdir($storageDirectory, 0750, true) && !is_dir($storageDirectory)) {
+if (!is_dir($storageDirectory) && !mkdir($storageDirectory, 0755, true) && !is_dir($storageDirectory)) {
     respond(500, false, 'The application could not be stored.');
+}
+
+if (!is_writable($storageDirectory)) {
+    respond(500, false, 'The application storage directory is not writable.');
 }
 
 $isNewFile = !file_exists($storageFile) || filesize($storageFile) === 0;

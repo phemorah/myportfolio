@@ -40,12 +40,18 @@ form.addEventListener('submit', async (event) => {
     note.textContent = 'Application saved. Opening WhatsApp so you can send your message to Femi.';
     form.reset();
   } catch (error) {
+    if (whatsappWindow) whatsappWindow.close();
     note.className = 'form-note error';
-    note.textContent = 'Email/storage was unavailable, but you can still complete your application on WhatsApp.';
-  } finally {
-    if (whatsappWindow) whatsappWindow.location.href = whatsappUrl;
-    else window.location.href = whatsappUrl;
+    note.innerHTML = `Your application could not be saved yet. Please try again or <a href="${whatsappUrl}" target="_blank" rel="noopener">continue on WhatsApp</a>.`;
     submitButton.disabled = false;
-    submitButton.innerHTML = 'Send application <span>→</span>';
+    submitButton.innerHTML = 'Try again <span>→</span>';
+    return;
+  } finally {
+    if (note.classList.contains('success')) {
+      if (whatsappWindow) whatsappWindow.location.href = whatsappUrl;
+      else window.location.href = whatsappUrl;
+      submitButton.disabled = false;
+      submitButton.innerHTML = 'Send application <span>→</span>';
+    }
   }
 });
