@@ -48,7 +48,10 @@ if (!preg_match('/^[0-9+()\-\s]{7,40}$/', $phone)) {
     respond(422, false, 'Please enter a valid WhatsApp number.');
 }
 
-$storageDirectory = __DIR__ . DIRECTORY_SEPARATOR . 'storage';
+$documentRoot = isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT'] !== ''
+    ? rtrim((string) $_SERVER['DOCUMENT_ROOT'], DIRECTORY_SEPARATOR)
+    : dirname(__DIR__);
+$storageDirectory = dirname($documentRoot) . DIRECTORY_SEPARATOR . 'application_data';
 $storageFile = $storageDirectory . DIRECTORY_SEPARATOR . 'coding-applications.csv';
 
 if (!is_dir($storageDirectory) && !mkdir($storageDirectory, 0755, true) && !is_dir($storageDirectory)) {
