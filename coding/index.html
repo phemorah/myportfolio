@@ -89,13 +89,16 @@
 
     <section class="apply section" id="apply">
       <div class="apply-copy"><span class="eyebrow light">Applications open</span><h2>Start your coding journey today.</h2><p>Tell me a little about yourself. I’ll reply to discuss your goals, availability, and whether the pilot is the right fit.</p><div class="apply-price"><strong>$120</strong><span>for the complete 8-session pilot</span></div></div>
-      <form id="application-form">
+      <form id="application-form" action="./apply.php" method="post">
         <label>Full name<input name="name" type="text" autocomplete="name" required placeholder="Your name"></label>
         <label>Email address<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
         <label>WhatsApp number<input name="phone" type="tel" autocomplete="tel" required placeholder="Include country code"></label>
         <label>What would you like to achieve?<textarea name="goal" rows="4" required placeholder="Tell me about your goals and any experience you have..."></textarea></label>
+        <label class="consent"><input name="privacy_consent" type="checkbox" value="yes" required><span>I agree that my information may be stored and used to respond to this application.</span></label>
+        <label class="consent"><input name="marketing_consent" type="checkbox" value="yes"><span>You may also contact me about future coding programmes and learning opportunities. <em>Optional</em></span></label>
+        <label class="website-field" aria-hidden="true">Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
         <button class="button button-light" type="submit">Send application <span>→</span></button>
-        <p class="form-note" id="form-note">Submitting opens WhatsApp with your answers ready to send.</p>
+        <p class="form-note" id="form-note" aria-live="polite">Your application will be saved and emailed to Femi, then WhatsApp will open with your answers ready to send.</p>
       </form>
     </section>
   </main>
