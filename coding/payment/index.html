@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <meta name="description" content="Payment options for the Personalised Full-Stack Application Development Mentorship with Femi Ajao.">
+  <title>Mentorship Payment | Femi Ajao</title>
+  <link rel="icon" href="../../img/favico.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20260807">
+  <link rel="stylesheet" href="./payment.css?v=20260807">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../../" aria-label="Femi Ajao home"><span class="brand-mark"><img src="../../img/favico.png" alt="" width="44" height="44"></span><span><strong>Femi Ajao</strong><small>Developer · Product Builder · Coding Tutor</small></span></a>
+    <nav aria-label="Main navigation"><a href="../">Programme</a><a href="mailto:hello@femiajao.com">Need help?</a></nav>
+  </header>
+
+  <main>
+    <section class="payment-hero">
+      <div class="payment-intro"><span class="eyebrow">Approved applicants</span><h1>Personalised Full-Stack Application Development Mentorship</h1><p>Eight focused, one-to-one sessions designed around your goals and a real application project.</p><div class="price"><strong>$120</strong><span>Complete 8-session programme</span></div></div>
+      <aside class="summary-card"><span>Programme summary</span><ul><li>8 live one-to-one sessions</li><li>60 minutes per session</li><li>Assignments and code reviews</li><li>Guided full-stack application</li><li>Flexible schedule</li></ul><p><strong>Payment policy:</strong> full payment must be confirmed before the first session can be booked.</p></aside>
+    </section>
+
+    <section class="payment-section">
+      <div class="section-heading"><span class="eyebrow">Choose how to pay</span><h2>Secure options for local and international applicants.</h2><p>Card links and payment instructions are issued to approved applicants and tied to their application email.</p></div>
+      <div class="payment-grid">
+        <article><div class="method-icon">$</div><span class="method-label">International</span><h3>USD card payment</h3><p>Pay $120 using an eligible international debit or credit card through a secure hosted checkout.</p><button type="button" class="method-button" data-method="Paystack — USD card" data-currency="USD">Request USD payment link <span>→</span></button></article>
+        <article><div class="method-icon">₦</div><span class="method-label">Nigeria</span><h3>NGN card or transfer</h3><p>Pay the fixed naira programme price using a Nigerian card, bank transfer, USSD, or another available local method.</p><button type="button" class="method-button" data-method="Paystack — NGN" data-currency="NGN">Request NGN payment link <span>→</span></button></article>
+        <article><div class="method-icon">↗</div><span class="method-label">Direct settlement</span><h3>USD bank transfer</h3><p>Receive a personalised invoice with domiciliary-account and international transfer instructions.</p><button type="button" class="method-button" data-method="USD bank transfer" data-currency="USD">Request bank invoice <span>→</span></button></article>
+        <article><div class="method-icon">◎</div><span class="method-label">By request</span><h3>USDC or USDT</h3><p>Receive an invoice specifying the approved stablecoin, network, wallet address, confirmation rules, and refund terms.</p><button type="button" class="method-button" data-method="Stablecoin — USDC/USDT" data-currency="USD">Request crypto instructions <span>→</span></button></article>
+      </div>
+    </section>
+
+    <section class="request-section" id="request">
+      <div><span class="eyebrow light">Payment request</span><h2>Request your secure payment link or invoice.</h2><p>Use the same email address you supplied in your application. No booking access is released until payment has been independently verified.</p><div class="security-note"><strong>Never send card details through this form.</strong><span>Card information is entered only on the secure payment provider’s checkout.</span></div></div>
+      <form id="payment-request-form" action="./request.php" method="post">
+        <label>Full name<input name="name" type="text" autocomplete="name" required placeholder="Your name"></label>
+        <label>Application email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+        <label>WhatsApp number<input name="phone" type="tel" autocomplete="tel" required placeholder="Include country code"></label>
+        <label>Payment method<select name="method" id="payment-method" required><option value="">Choose a payment method</option><option>Paystack — USD card</option><option>Paystack — NGN</option><option>USD bank transfer</option><option>Stablecoin — USDC/USDT</option></select></label>
+        <label>Currency<select name="currency" id="payment-currency" required><option value="">Choose currency</option><option value="USD">USD — $120</option><option value="NGN">NGN — fixed invoice amount</option></select></label>
+        <label class="consent"><input name="confirmation" type="checkbox" value="yes" required><span>I understand that payment must be verified before I can book my first session.</span></label>
+        <button class="button" type="submit">Request payment details <span>→</span></button>
+        <p class="form-status" id="form-status" aria-live="polite">Payment instructions are normally sent to approved applicants by email or WhatsApp.</p>
+      </form>
+    </section>
+
+    <section class="terms-section"><div><span class="eyebrow">Before you pay</span><h2>Simple programme terms.</h2></div><div class="terms-list"><p><strong>Booking</strong><span>The first session can be scheduled only after cleared payment is confirmed.</span></p><p><strong>Rescheduling</strong><span>Give at least 24 hours’ notice when you need to move a session.</span></p><p><strong>Programme access</strong><span>The eight sessions are personal to the approved applicant and cannot be transferred.</span></p><p><strong>Refunds</strong><span>Refund eligibility is assessed before the programme begins; completed sessions and payment-processing fees may be deducted.</span></p></div></section>
+  </main>
+
+  <footer><a class="brand" href="../../"><span class="brand-mark"><img src="../../img/favico.png" alt="" width="44" height="44"></span><span><strong>Femi Ajao</strong><small>Full-Stack Developer, Product Builder & Coding Tutor</small></span></a><div><a href="mailto:hello@femiajao.com">hello@femiajao.com</a><a href="https://wa.me/2348033979829" target="_blank" rel="noopener">WhatsApp</a></div><p>© <span id="year"></span> Femi Ajao</p></footer>
+  <script src="./payment.js?v=20260807"></script>
+</body>
+</html>
