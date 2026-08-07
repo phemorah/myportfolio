@@ -8,4 +8,8 @@ return [
         'account_name' => 'YOUR ACCOUNT NAME',
         'account_number' => 'YOUR ACCOUNT NUMBER',
     ],
+    'admin' => [
+        'password_hash' => 'PASTE_PASSWORD_HASH_HERE',
+        'booking_url' => '',
+    ],
 ];
