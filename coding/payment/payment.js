@@ -14,8 +14,12 @@ document.querySelectorAll('.method-button').forEach((button) => {
     methodField.value = button.dataset.method;
     currencyField.value = button.dataset.currency;
     document.querySelector('#request').scrollIntoView({ behavior: 'smooth' });
-    setTimeout(() => form.querySelector('[name="name"]').focus(), 500);
+    setTimeout(() => form.querySelector('[name="email"]').focus(), 500);
   });
+});
+
+methodField.addEventListener('change', () => {
+  currencyField.value = methodField.value === 'Direct NGN bank transfer' ? 'NGN' : methodField.value ? 'USD' : '';
 });
 
 form.addEventListener('submit', async (event) => {

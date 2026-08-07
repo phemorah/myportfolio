@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css?v=20260807">
-  <link rel="stylesheet" href="./payment.css?v=20260807">
+  <link rel="stylesheet" href="./payment.css?v=20260807-2">
 </head>
 <body>
   <header class="site-header">
@@ -38,9 +38,7 @@
     <section class="request-section" id="request">
       <div><span class="eyebrow light">Payment request</span><h2>Request your secure payment link or invoice.</h2><p>Use the same email address you supplied in your application. No booking access is released until payment has been independently verified.</p><div class="security-note"><strong>Never send card details through this form.</strong><span>Card information is entered only on the secure payment provider’s checkout.</span></div></div>
       <form id="payment-request-form" action="./request.php" method="post">
-        <label>Full name<input name="name" type="text" autocomplete="name" required placeholder="Your name"></label>
-        <label>Application email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
-        <label>WhatsApp number<input name="phone" type="tel" autocomplete="tel" required placeholder="Include country code"></label>
+        <label class="full-field">Application email<input name="email" type="email" autocomplete="email" required placeholder="Use the email from your coding application"><small>We’ll securely match this to your existing application details.</small></label>
         <label>Payment method<select name="method" id="payment-method" required><option value="">Choose a payment method</option><option>Paystack — USD card</option><option>Direct NGN bank transfer</option><option>USD bank transfer</option><option>Stablecoin — USDC/USDT</option></select></label>
         <label>Currency<select name="currency" id="payment-currency" required><option value="">Choose currency</option><option value="USD">USD — $120</option><option value="NGN">NGN — fixed invoice amount</option></select></label>
         <label class="consent"><input name="confirmation" type="checkbox" value="yes" required><span>I understand that payment must be verified before I can book my first session.</span></label>
@@ -71,6 +69,6 @@
   </main>
 
   <footer><a class="brand" href="../../"><span class="brand-mark"><img src="../../img/favico.png" alt="" width="44" height="44"></span><span><strong>Femi Ajao</strong><small>Full-Stack Developer, Product Builder & Coding Tutor</small></span></a><div><a href="mailto:hello@femiajao.com">hello@femiajao.com</a><a href="https://wa.me/2348033979829" target="_blank" rel="noopener">WhatsApp</a></div><p>© <span id="year"></span> Femi Ajao</p></footer>
-  <script src="./payment.js?v=20260807"></script>
+  <script src="./payment.js?v=20260807-2"></script>
 </body>
 </html>
