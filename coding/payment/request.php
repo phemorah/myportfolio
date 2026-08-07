@@ -29,7 +29,7 @@ $phone = field('phone', 40);
 $method = field('method', 80);
 $currency = field('currency', 3);
 $confirmed = ($_POST['confirmation'] ?? '') === 'yes';
-$methods = ['Paystack — USD card', 'Paystack — NGN', 'USD bank transfer', 'Stablecoin — USDC/USDT'];
+$methods = ['Paystack — USD card', 'Direct NGN bank transfer', 'USD bank transfer', 'Stablecoin — USDC/USDT'];
 
 if ($name === '' || $email === false || !preg_match('/^[0-9+()\-\s]{7,40}$/', $phone) || !in_array($method, $methods, true) || !in_array($currency, ['USD', 'NGN'], true) || !$confirmed) {
     reply(422, false, 'Please complete all required fields with valid information.');
@@ -57,4 +57,18 @@ $body = "A mentorship payment request has been received.\n\nReference: {$referen
 $headers = ['From: Femi Ajao Website <hello@femiajao.com>', 'Reply-To: ' . $email, 'Content-Type: text/plain; charset=UTF-8'];
 @mail('hello@femiajao.com', $subject, $body, implode("\r\n", $headers));
 
-reply(200, true, 'Payment request saved.', ['reference' => $reference]);
+$response = ['reference' => $reference];
+if ($method === 'Direct NGN bank transfer') {
+    define('PAYMENT_APP', true);
+    $configFile = $directory . DIRECTORY_SEPARATOR . 'payment-config.php';
+    if (!file_exists($configFile)) reply(503, false, 'Bank transfer is temporarily unavailable. Please contact Femi.');
+    $config = require $configFile;
+    $response['bank_details'] = [
+        'bank' => $config['ngn']['bank'],
+        'account_name' => $config['ngn']['account_name'],
+        'account_number' => $config['ngn']['account_number'],
+        'formatted_amount' => $config['ngn']['formatted_amount'],
+    ];
+}
+
+reply(200, true, 'Payment request saved.', $response);

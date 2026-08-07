@@ -29,7 +29,7 @@
       <div class="section-heading"><span class="eyebrow">Choose how to pay</span><h2>Secure options for local and international applicants.</h2><p>Card links and payment instructions are issued to approved applicants and tied to their application email.</p></div>
       <div class="payment-grid">
         <article><div class="method-icon">$</div><span class="method-label">International</span><h3>USD card payment</h3><p>Pay $120 using an eligible international debit or credit card through a secure hosted checkout.</p><button type="button" class="method-button" data-method="Paystack — USD card" data-currency="USD">Request USD payment link <span>→</span></button></article>
-        <article><div class="method-icon">₦</div><span class="method-label">Nigeria</span><h3>NGN card or transfer</h3><p>Pay the fixed naira programme price using a Nigerian card, bank transfer, USSD, or another available local method.</p><button type="button" class="method-button" data-method="Paystack — NGN" data-currency="NGN">Request NGN payment link <span>→</span></button></article>
+        <article><div class="method-icon">₦</div><span class="method-label">Nigeria</span><h3>Direct NGN transfer</h3><p>Pay the fixed programme fee of <strong>₦167,999.00</strong> directly by Nigerian bank transfer, without card-processing charges.</p><button type="button" class="method-button" data-method="Direct NGN bank transfer" data-currency="NGN">Get transfer details <span>→</span></button></article>
         <article><div class="method-icon">↗</div><span class="method-label">Direct settlement</span><h3>USD bank transfer</h3><p>Receive a personalised invoice with domiciliary-account and international transfer instructions.</p><button type="button" class="method-button" data-method="USD bank transfer" data-currency="USD">Request bank invoice <span>→</span></button></article>
         <article><div class="method-icon">◎</div><span class="method-label">By request</span><h3>USDC or USDT</h3><p>Receive an invoice specifying the approved stablecoin, network, wallet address, confirmation rules, and refund terms.</p><button type="button" class="method-button" data-method="Stablecoin — USDC/USDT" data-currency="USD">Request crypto instructions <span>→</span></button></article>
       </div>
@@ -41,11 +41,29 @@
         <label>Full name<input name="name" type="text" autocomplete="name" required placeholder="Your name"></label>
         <label>Application email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
         <label>WhatsApp number<input name="phone" type="tel" autocomplete="tel" required placeholder="Include country code"></label>
-        <label>Payment method<select name="method" id="payment-method" required><option value="">Choose a payment method</option><option>Paystack — USD card</option><option>Paystack — NGN</option><option>USD bank transfer</option><option>Stablecoin — USDC/USDT</option></select></label>
+        <label>Payment method<select name="method" id="payment-method" required><option value="">Choose a payment method</option><option>Paystack — USD card</option><option>Direct NGN bank transfer</option><option>USD bank transfer</option><option>Stablecoin — USDC/USDT</option></select></label>
         <label>Currency<select name="currency" id="payment-currency" required><option value="">Choose currency</option><option value="USD">USD — $120</option><option value="NGN">NGN — fixed invoice amount</option></select></label>
         <label class="consent"><input name="confirmation" type="checkbox" value="yes" required><span>I understand that payment must be verified before I can book my first session.</span></label>
         <button class="button" type="submit">Request payment details <span>→</span></button>
         <p class="form-status" id="form-status" aria-live="polite">Payment instructions are normally sent to approved applicants by email or WhatsApp.</p>
+      </form>
+    </section>
+
+    <section class="transfer-section" id="transfer-confirmation" hidden>
+      <div class="bank-panel"><span class="eyebrow">Direct NGN transfer</span><h2>Make your bank transfer.</h2><div class="bank-details"><p><span>Amount</span><strong id="bank-amount">₦167,999.00</strong></p><p><span>Bank</span><strong id="bank-name"></strong></p><p><span>Account name</span><strong id="account-name"></strong></p><p><span>Account number</span><strong id="account-number"></strong><button type="button" id="copy-account">Copy</button></p><p><span>Payment reference</span><strong id="transfer-reference"></strong></p></div><div class="verification-warning"><strong>Payment evidence is not confirmation of payment.</strong><span>Your first session can be booked only after the funds appear in the receiving bank account.</span></div></div>
+      <form id="evidence-form" action="./confirm-transfer.php" method="post" enctype="multipart/form-data">
+        <h3>Submit transfer evidence</h3>
+        <input name="payment_reference" id="evidence-reference" type="hidden">
+        <label>Application email<input name="email" id="evidence-email" type="email" required readonly></label>
+        <label>Name on sending account<input name="sender_name" type="text" required placeholder="Account holder's name"></label>
+        <label>Sending bank<input name="sender_bank" type="text" required placeholder="Your bank"></label>
+        <label>Amount transferred<input name="amount" type="number" min="167999" step="0.01" value="167999.00" required></label>
+        <label>Transfer date and time<input name="transferred_at" type="datetime-local" required></label>
+        <label>Bank transaction reference<input name="transaction_reference" type="text" required placeholder="Reference from your bank"></label>
+        <label class="file-label">Receipt or screenshot <small>PDF, JPG, PNG or WebP · maximum 5 MB</small><input name="evidence" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp" required></label>
+        <label class="consent"><input name="declaration" type="checkbox" value="yes" required><span>I confirm that these transfer details are accurate and understand that booking remains locked until the payment is verified.</span></label>
+        <button class="button" type="submit">Submit for verification <span>→</span></button>
+        <p class="form-status" id="evidence-status" aria-live="polite"></p>
       </form>
     </section>
 
