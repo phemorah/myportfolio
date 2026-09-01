@@ -115,8 +115,24 @@ function updateStatus($file, $reference, $statusColumn, $status)
 }
 
 $recordsError = '';
-$confirmations = readRows($confirmationsFile, $recordsError);
-if ($recordsError !== '') error_log('Payment admin: ' . $recordsError . ' File: ' . $confirmationsFile);
+$confirmations = [];
+$confirmationFiles = [];
+foreach (paymentDataDirectories() as $candidateDirectory) {
+    $candidateFile = $candidateDirectory . DIRECTORY_SEPARATOR . 'transfer-confirmations.csv';
+    if (!is_file($candidateFile)) continue;
+    $candidateError = '';
+    foreach (readRows($candidateFile, $candidateError) as $row) {
+        $referenceKey = (string) ($row['Payment reference'] ?? '');
+        if ($referenceKey !== '') $confirmations[$referenceKey] = $row;
+    }
+    $confirmationFiles[] = $candidateFile;
+    if ($candidateError !== '') error_log('Payment admin: ' . $candidateError . ' File: ' . $candidateFile);
+}
+$confirmations = array_values($confirmations);
+if (!$confirmationFiles) {
+    $recordsError = 'No payment records file was found in any configured storage location.';
+    error_log('Payment admin: ' . $recordsError);
+}
 
 if (isset($_GET['download'])) {
     $requested = basename((string) $_GET['download']);
@@ -124,8 +140,12 @@ if (isset($_GET['download'])) {
     foreach ($confirmations as $confirmation) {
         if (($confirmation['Evidence file'] ?? '') === $requested) { $allowed = true; break; }
     }
-    $path = $evidenceDirectory . DIRECTORY_SEPARATOR . $requested;
-    if (!$allowed || !is_file($path)) { http_response_code(404); exit('Evidence not found.'); }
+    $path = '';
+    foreach (paymentDataDirectories() as $candidateDirectory) {
+        $candidatePath = $candidateDirectory . DIRECTORY_SEPARATOR . 'payment-evidence' . DIRECTORY_SEPARATOR . $requested;
+        if (is_file($candidatePath)) { $path = $candidatePath; break; }
+    }
+    if (!$allowed || $path === '') { http_response_code(404); exit('Evidence not found.'); }
     $mime = (new finfo(FILEINFO_MIME_TYPE))->file($path) ?: 'application/octet-stream';
     header('Content-Type: ' . $mime);
     header('Content-Length: ' . filesize($path));
@@ -151,12 +171,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_action'])) {
     $action = (string) $_POST['payment_action'];
     $newStatus = $action === 'confirm' ? 'Paid' : ($action === 'review' ? 'Needs review' : '');
     if (!preg_match('/^PAY-[0-9]{6}-[A-F0-9]{8}$/', $reference) || $newStatus === '') { http_response_code(422); exit('Invalid payment action.'); }
-    $confirmationUpdated = updateStatus($confirmationsFile, $reference, 9, $newStatus);
-    $requestUpdated = updateStatus($requestsFile, $reference, 7, $newStatus);
+    $confirmationUpdated = false;
+    foreach ($confirmationFiles as $candidateFile) {
+        if (updateStatus($candidateFile, $reference, 9, $newStatus)) $confirmationUpdated = true;
+    }
+    $requestUpdated = false;
+    foreach (paymentDataDirectories() as $candidateDirectory) {
+        $candidateRequestFile = $candidateDirectory . DIRECTORY_SEPARATOR . 'payment-requests.csv';
+        if (is_file($candidateRequestFile) && updateStatus($candidateRequestFile, $reference, 7, $newStatus)) $requestUpdated = true;
+    }
     if ($confirmationUpdated && $requestUpdated) {
         $flash = "{$reference} marked {$newStatus}.";
         if ($newStatus === 'Paid') {
-            $confirmations = readRows($confirmationsFile);
+            $confirmations = [];
+            foreach ($confirmationFiles as $candidateFile) {
+                foreach (readRows($candidateFile) as $row) {
+                    $rowReference = (string) ($row['Payment reference'] ?? '');
+                    if ($rowReference !== '') $confirmations[$rowReference] = $row;
+                }
+            }
+            $confirmations = array_values($confirmations);
             foreach ($confirmations as $item) {
                 if (($item['Payment reference'] ?? '') === $reference) {
                     $recipient = (string) ($item['Applicant email'] ?? '');
@@ -173,7 +207,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_action'])) {
             }
         }
     } else { $flash = 'The payment status could not be updated.'; $flashType = 'error'; }
-    $confirmations = readRows($confirmationsFile);
+    $confirmations = [];
+    foreach ($confirmationFiles as $candidateFile) {
+        foreach (readRows($candidateFile) as $row) {
+            $rowReference = (string) ($row['Payment reference'] ?? '');
+            if ($rowReference !== '') $confirmations[$rowReference] = $row;
+        }
+    }
+    $confirmations = array_values($confirmations);
 }
 
 $counts = ['Awaiting verification' => 0, 'Paid' => 0, 'Needs review' => 0];

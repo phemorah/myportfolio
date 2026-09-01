@@ -57,6 +57,22 @@ $saved = fputcsv($handle, array_map('safeCsv', [$reference, gmdate('Y-m-d H:i:s'
 flock($handle, LOCK_UN); fclose($handle);
 if (!$saved) { @unlink($destination); finish(500, false, 'The confirmation could not be recorded.'); }
 
+// Keep a protected in-project mirror so deployments with unusual DOCUMENT_ROOT
+// values still expose the same records to the administration dashboard.
+$mirrorBase = paymentMirrorDirectory(true);
+$mirrorEvidenceDirectory = $mirrorBase . DIRECTORY_SEPARATOR . 'payment-evidence';
+if (!is_dir($mirrorEvidenceDirectory)) @mkdir($mirrorEvidenceDirectory, 0750, true);
+$mirrorLog = $mirrorBase . DIRECTORY_SEPARATOR . 'transfer-confirmations.csv';
+$mirrorIsNew = !is_file($mirrorLog) || filesize($mirrorLog) === 0;
+$mirrorHandle = @fopen($mirrorLog, 'ab');
+if ($mirrorHandle !== false && flock($mirrorHandle, LOCK_EX)) {
+    if ($mirrorIsNew) fputcsv($mirrorHandle, ['Payment reference', 'Submitted at', 'Applicant email', 'Sender name', 'Sender bank', 'Amount', 'Transfer date', 'Bank reference', 'Evidence file', 'Status']);
+    fputcsv($mirrorHandle, array_map('safeCsv', [$reference, gmdate('Y-m-d H:i:s') . ' UTC', (string) $email, $senderName, $senderBank, number_format((float) $amount, 2, '.', ''), $transferredAt, $transactionReference, $filename, 'Awaiting verification']));
+    flock($mirrorHandle, LOCK_UN);
+    fclose($mirrorHandle);
+    @copy($destination, $mirrorEvidenceDirectory . DIRECTORY_SEPARATOR . $filename);
+}
+
 $subject = "Transfer awaiting verification — {$reference}";
 $body = "NGN transfer evidence has been submitted.\n\nPayment reference: {$reference}\nApplicant email: {$email}\nSender: {$senderName}\nSending bank: {$senderBank}\nAmount: NGN " . number_format((float) $amount, 2) . "\nTransfer date: {$transferredAt}\nBank reference: {$transactionReference}\nEvidence file: {$filename}\nStatus: Awaiting verification\n";
 $headers = ['From: Femi Ajao Website <hello@femiajao.com>', 'Reply-To: ' . $email, 'Content-Type: text/plain; charset=UTF-8'];
