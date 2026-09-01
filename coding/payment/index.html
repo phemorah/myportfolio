@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css?v=20260807">
   <link rel="stylesheet" href="./payment.css?v=20260807-2">
+  <link rel="stylesheet" href="./payment-success.css?v=20260901-1">
 </head>
 <body>
   <header class="site-header">
@@ -63,12 +64,20 @@
         <button class="button" type="submit">Submit for verification <span>→</span></button>
         <p class="form-status" id="evidence-status" aria-live="polite"></p>
       </form>
+      <div class="evidence-success" id="evidence-success" role="status" tabindex="-1" hidden>
+        <span class="success-mark" aria-hidden="true">✓</span>
+        <span class="eyebrow">Proof submitted</span>
+        <h3>Payment evidence received.</h3>
+        <p>Your transfer is now awaiting verification. You’ll receive an email after the payment has been confirmed.</p>
+        <p class="success-reference">Payment reference <strong id="success-reference"></strong></p>
+        <a href="../../">Return to the homepage <span>→</span></a>
+      </div>
     </section>
 
     <section class="terms-section"><div><span class="eyebrow">Before you pay</span><h2>Simple programme terms.</h2></div><div class="terms-list"><p><strong>Booking</strong><span>The first session can be scheduled only after cleared payment is confirmed.</span></p><p><strong>Rescheduling</strong><span>Give at least 24 hours’ notice when you need to move a session.</span></p><p><strong>Programme access</strong><span>The eight sessions are personal to the approved applicant and cannot be transferred.</span></p><p><strong>Refunds</strong><span>Refund eligibility is assessed before the programme begins; completed sessions and payment-processing fees may be deducted.</span></p></div></section>
   </main>
 
   <footer><a class="brand" href="../../"><span class="brand-mark"><img src="../../img/favico.png" alt="" width="44" height="44"></span><span><strong>Femi Ajao</strong><small>Full-Stack Developer, Product Builder & Coding Tutor</small></span></a><div><a href="mailto:hello@femiajao.com">hello@femiajao.com</a><a href="https://wa.me/2348033979829" target="_blank" rel="noopener">WhatsApp</a></div><p>© <span id="year"></span> Femi Ajao</p></footer>
-  <script src="./payment.js?v=20260807-2"></script>
+  <script src="./payment.js?v=20260901-1"></script>
 </body>
 </html>

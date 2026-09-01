@@ -6,6 +6,7 @@ const submitButton = form.querySelector('button[type="submit"]');
 const transferSection = document.querySelector('#transfer-confirmation');
 const evidenceForm = document.querySelector('#evidence-form');
 const evidenceStatus = document.querySelector('#evidence-status');
+const evidenceSuccess = document.querySelector('#evidence-success');
 
 document.querySelector('#year').textContent = new Date().getFullYear();
 
@@ -76,13 +77,16 @@ evidenceForm.addEventListener('submit', async (event) => {
     const response = await fetch(evidenceForm.action, { method: 'POST', body: new FormData(evidenceForm), headers: { Accept: 'application/json' } });
     const result = await response.json();
     if (!response.ok || !result.ok) throw new Error(result.message || 'Upload failed');
-    evidenceStatus.className = 'form-status success';
-    evidenceStatus.textContent = `Evidence received for ${result.reference}. Status: Awaiting verification. You will be contacted after the transfer is confirmed.`;
-    evidenceForm.querySelectorAll('input:not([type="hidden"])').forEach((input) => { if (!input.readOnly) input.value = ''; });
+    document.querySelector('#success-reference').textContent = result.reference;
+    evidenceForm.reset();
+    evidenceForm.hidden = true;
+    evidenceSuccess.hidden = false;
+    history.replaceState(null, '', '#payment-received');
+    evidenceSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => evidenceSuccess.focus({ preventScroll: true }), 450);
   } catch (error) {
     evidenceStatus.className = 'form-status error';
     evidenceStatus.textContent = error.message || 'The evidence could not be uploaded. Please contact Femi.';
-  } finally {
     button.disabled = false;
     button.innerHTML = 'Submit for verification <span>→</span>';
   }
