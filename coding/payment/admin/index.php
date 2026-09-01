@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'storage.php';
 
 header('X-Robots-Tag: noindex, nofollow', true);
 header('X-Frame-Options: DENY');
@@ -17,8 +18,7 @@ session_start();
 function escape($value) { return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8'); }
 function redirectAdmin() { header('Location: ./'); exit; }
 
-$documentRoot = !empty($_SERVER['DOCUMENT_ROOT']) ? rtrim((string) $_SERVER['DOCUMENT_ROOT'], DIRECTORY_SEPARATOR) : dirname(dirname(dirname(__DIR__)));
-$dataDirectory = dirname($documentRoot) . DIRECTORY_SEPARATOR . 'application_data';
+$dataDirectory = paymentDataDirectory();
 $configFile = $dataDirectory . DIRECTORY_SEPARATOR . 'payment-config.php';
 $config = [];
 if (file_exists($configFile)) {
@@ -70,16 +70,27 @@ $confirmationsFile = $dataDirectory . DIRECTORY_SEPARATOR . 'transfer-confirmati
 $requestsFile = $dataDirectory . DIRECTORY_SEPARATOR . 'payment-requests.csv';
 $evidenceDirectory = $dataDirectory . DIRECTORY_SEPARATOR . 'payment-evidence';
 
-function readRows($file)
+function readRows($file, &$readError = '')
 {
     $rows = [];
     $handle = @fopen($file, 'rb');
-    if ($handle === false) return $rows;
+    if ($handle === false) {
+        $readError = is_file($file) ? 'Payment records exist but cannot be read.' : 'The payment records file was not found.';
+        return $rows;
+    }
     $header = fgetcsv($handle);
+    if (!is_array($header) || count($header) !== 10) {
+        fclose($handle);
+        $readError = 'The payment records file has an invalid or outdated header.';
+        return $rows;
+    }
+    $invalidRows = 0;
     while (($row = fgetcsv($handle)) !== false) {
-        if ($header && count($header) === count($row)) $rows[] = array_combine($header, $row);
+        if (count($header) === count($row)) $rows[] = array_combine($header, $row);
+        else $invalidRows++;
     }
     fclose($handle);
+    if ($invalidRows > 0) $readError = "{$invalidRows} payment record(s) could not be parsed.";
     return $rows;
 }
 
@@ -103,7 +114,9 @@ function updateStatus($file, $reference, $statusColumn, $status)
     return true;
 }
 
-$confirmations = readRows($confirmationsFile);
+$recordsError = '';
+$confirmations = readRows($confirmationsFile, $recordsError);
+if ($recordsError !== '') error_log('Payment admin: ' . $recordsError . ' File: ' . $confirmationsFile);
 
 if (isset($_GET['download'])) {
     $requested = basename((string) $_GET['download']);

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'storage.php';
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
@@ -27,8 +28,7 @@ $mime = $finfo->file($_FILES['evidence']['tmp_name']);
 $types = ['application/pdf' => 'pdf', 'image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
 if (!isset($types[$mime])) finish(422, false, 'Only PDF, JPG, PNG or WebP evidence is accepted.');
 
-$documentRoot = !empty($_SERVER['DOCUMENT_ROOT']) ? rtrim((string) $_SERVER['DOCUMENT_ROOT'], DIRECTORY_SEPARATOR) : dirname(dirname(__DIR__));
-$base = dirname($documentRoot) . DIRECTORY_SEPARATOR . 'application_data';
+$base = paymentDataDirectory(true);
 $requestsFile = $base . DIRECTORY_SEPARATOR . 'payment-requests.csv';
 $requestMatched = false;
 $requestsHandle = @fopen($requestsFile, 'rb');

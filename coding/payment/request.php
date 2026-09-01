@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'storage.php';
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
@@ -33,8 +34,7 @@ if ($email === false || !in_array($method, $methods, true) || !in_array($currenc
     reply(422, false, 'Please complete all required fields with valid information.');
 }
 
-$documentRoot = !empty($_SERVER['DOCUMENT_ROOT']) ? rtrim((string) $_SERVER['DOCUMENT_ROOT'], DIRECTORY_SEPARATOR) : dirname(dirname(__DIR__));
-$directory = dirname($documentRoot) . DIRECTORY_SEPARATOR . 'application_data';
+$directory = paymentDataDirectory(true);
 if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) reply(500, false, 'Storage is unavailable.');
 
 $applicationsFile = $directory . DIRECTORY_SEPARATOR . 'coding-applications.csv';
